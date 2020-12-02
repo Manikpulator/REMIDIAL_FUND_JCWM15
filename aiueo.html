@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PATTERN</title>
+</head>
+
+<body>
+    <h1>Masukkan Kata :</h1>
+    <form>
+        <input type="text" id="kata" placeholder="Masukan sebuah kata">
+    </form>
+    <br>
+    <button onclick="OnHitungVokal()">HITUNG VOKAL</button>
+    <button onclick="OnHurufVokal()">HURUF VOKAL</button>
+    <button onclick="OnTanpaVokal()">TANPA VOKAL</button>
+
+    <h1>Hasil : </h1>
+    <h1 id="output"></h1>
+</body>
+<script>
+    // acess element
+    let output = document.getElementById("output")
+
+    const OnHitungVokal = () => {
+        let huruf = kata.value
+        huruf = huruf.toLowerCase()
+        if(huruf == "")
+        {
+           alert("Input kosong") 
+        }
+        else
+        {
+
+            let jumlah_huruf = huruf.length
+            let pattern = ""
+            let jumlah_konsonan = ""
+            let nilai = 0
+
+
+            for(let i=0; i<jumlah_huruf; i++ )
+            {
+                let karakter = huruf.charAt(i)
+                if(karakter == 'a' || karakter == 'i' || karakter == 'u' || karakter == 'e' || karakter == 'o' )
+                {             
+                    nilai++                 
+                } 
+                
+
+            }
+            pattern += "ada " + `${nilai} &nbsp` + "huruf " + "vokal"
+            jumlah_konsonan = nilai
+            output.innerHTML = pattern
+        }
+    }
+
+    const OnHurufVokal = () => {
+        let huruf = kata.value
+        huruf = huruf.toLowerCase()
+        if(huruf == "")
+        {
+           alert("Input kosong") 
+        }
+        else
+        {
+
+            let jumlah_huruf = huruf.length
+            let pattern = ""
+            let jumlah_konsonan = ""
+            let nilai = 0
+
+
+            for(let i=0; i<jumlah_huruf; i++ )
+            {
+                let karakter = huruf.charAt(i)
+                if(karakter == 'a' || karakter == 'i' || karakter == 'u' || karakter == 'e' || karakter == 'o' )
+                {             
+                    pattern += karakter + ", "                
+                } 
+                
+
+            }
+            console.log(pattern)
+            output.innerHTML = pattern
+        }
+    }
+
+     const OnTanpaVokal = () => {
+        let huruf = kata.value
+        huruf = huruf.toLowerCase()
+        if(huruf == "")
+        {
+           alert("Input kosong") 
+        }
+        else
+        {
+            let jumlah_huruf = huruf.length
+            let pattern = ""
+            let jumlah_konsonan = ""
+            let nilai = 0
+
+
+            for(let i=0; i<jumlah_huruf; i++ )
+            {
+                let karakter = huruf.charAt(i)
+                if(karakter != 'a' && karakter != 'i' && karakter != 'u' && karakter != 'e' && karakter != 'o' )
+                {             
+                    pattern += karakter               
+                } 
+                
+
+            }
+            console.log(pattern)
+            output.innerHTML = pattern
+        }
+    }
+
+   
+</script>
+
+</html>

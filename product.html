@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding: 5px 8px;
+            }
+        </style>
+        <title>TABLE</title>
+    </head>
+    <body>
+        <h1>FORM PRODUCT</h1>
+        <form>
+            <input type="text" id="productName" placeholder="Product Name">
+            <input type="email" id="productPrice" placeholder="Product Price">
+
+            <br>
+            <input type="radio" id="food" name="category" value="Food">
+            <label for="food">Food</label>
+            <input type="radio" id="drink" name="category" value="Drink">
+            <label for="food">Drink</label>
+            <input type="radio" id="others" name="category" value="Others">
+            <label for="food">Others</label>
+        </form>
+        <br>
+        <button onclick="OnButtonAdd()">ADD</button>
+
+        <h1>USERS DATA</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </body>
+    <script>
+        // access element
+        let tbody = document.getElementById("tbody")
+        let form = document.forms[0]
+
+        // database
+        let users = [
+            {
+                productName : "Apel",
+                productPrice : "5000",
+                category : "Food",
+            },
+            {
+                productName : "Milk",
+                productPrice : "7000",
+                category : "Drink"
+            },
+            {
+                productName : "Tisu",
+                productPrice : "2000",
+                category : "Other"
+            }
+        ]
+
+        // show database
+        const ShowUsers = (idx) => {
+            let tr = ""
+            for (let i = 0; i < users.length; i++) {
+                if (idx === i) {
+                    tr += `
+                        <tr>
+                            <td>#</td>
+                            <td>
+                                <input type="text" id="edit-productName" value="${users[i].productName}">
+                            </td>
+                            <td>
+                                <input type="email" id="edit-productPrice" value="${users[i].productPrice}">
+                            </td>
+                            <td>
+                                <input type="radio" id="food" name="edit-category" value="Food">
+                                <label for="food">Food</label>
+                                <input type="radio" id="drink" name="edit-category" value="Drink">
+                                <label for="food">Drink</label>
+                                <input type="radio" id="others" name="edit-category" value="Others">
+                                <label for="food">Others</label>
+                            </td>
+                            <td>
+                                <button onclick="OnButtonSave(${i})">SAVE</button>
+                                <button onclick="ShowUsers()">CANCEL</button>
+                            </td>
+                        <tr>
+                    `
+                } else {
+                    tr += `
+                        <tr>
+                            <td>${i + 1}</td>
+                            <td>${users[i].productName}</td>
+                            <td>${users[i].productPrice}</td>
+                            <td>${users[i].category}</td>
+                            <td>
+                                <button onclick="ShowUsers(${i})">EDIT</button>
+                                <button onclick="OnButtonDelete(${i})">DELETE</button>
+                            </td>
+                        <tr>
+                    `
+                }
+            }
+
+            // show table
+            tbody.innerHTML = tr
+        }
+
+        // show table
+        ShowUsers()
+
+        // add new user
+        const OnButtonAdd = () => {
+            // get all value
+            let productName = form["productName"].value
+            let productPrice = form["productPrice"].value
+            //let category = form["category"].value
+
+            let category = document.getElementsByName("category")
+            for(let i =0, length = category.length; i < length; i++)
+            {
+                if(category[i].checked)
+                {
+                         category = category[i].value
+                }
+            }
+
+            console.log(productName, productPrice, category)
+
+            // check input
+            if (productName === '' || productPrice === '' || category === '') {
+                alert("⚠ Wrong input !")
+                return
+            }
+
+            // add new user
+            users.push({ productName, productPrice, category })
+
+            // reset value
+            form["productName"].value = ""
+            form["productPrice"].value = ""
+            form["category"].value = ""
+
+            // show table
+            ShowUsers()
+        }
+
+        // delete user
+        const OnButtonDelete = idx => {
+            // delete user
+            users.splice(idx, 1)
+
+            // show table
+            ShowUsers()
+        }
+
+        // save edited user
+        const OnButtonSave = (idx) => {
+            // get all value
+            let edproductName = document.getElementById("edit-productName").value
+            let edproductPrice = document.getElementById("edit-productPrice").value
+            let edcategory = document.getElementsByName("edit-category")
+            for(let i =0, length = edcategory.length; i < length; i++)
+            {
+                if(edcategory[i].checked)
+                {
+                         edcategory = edcategory[i].value
+                }
+            }
+       
+            // update database
+            users[idx] = { productName : edproductName, productPrice : edproductPrice, category : edcategory }
+
+            // show table
+            ShowUsers()
+        }
+    </script>
+</html>
